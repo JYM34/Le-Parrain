@@ -5,13 +5,19 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "pm2 start server.js --name Godfather",
+    "restart": "pm2 flush Godfather && pm2 restart Godfather && pm2 log Godfather"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "express": "^4.21.2"
+    "@pixi/unsafe-eval": "^7.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^4.21.2",
+    "helmet": "^8.1.0",
+    "pixi.js": "^8.9.2"
   }
 }

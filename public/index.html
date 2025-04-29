@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Carte District</title>
+  <link rel="stylesheet" href="./hud.css">
   <style>
     body { margin: 0; overflow: hidden; background: #1e1e1e; }
     canvas { display: block; }
@@ -10,28 +11,17 @@
 </head>
 <body>
 
-<!-- Charger PIXI.js depuis le CDN EN GLOBAL -->
-<script src="https://unpkg.com/pixi.js@7.2.4/dist/pixi.min.js"></script>
+<!-- Interface Joueur -->
+<div id="hud">
+  <div class="hud-item">👤 <span id="player-name">Don Inconnu</span></div>
+  <div class="hud-item">💰 <span id="player-money">0</span></div>
+  <div class="hud-item">📦 <span id="player-resources">0</span></div>
+  <div class="hud-item">🏆 <span id="player-reputation">0</span></div>
+</div>
 
-<!-- Charger tes fichiers JS en module -->
-<script type="module" src="./map-controller.js"></script>
-<script type="module" src="./world-map.js"></script>
-<script type="module" src="./district-map.js"></script>
-<script type="module" src="./world-generator.js"></script>
-
-<script type="module">
-  import { MapController } from './map-controller.js';
-  import { generateWorldMap } from './world-generator.js';
-
-  const app = new PIXI.Application({ width: window.innerWidth, height: window.innerHeight, backgroundColor: 0x1e1e1e });
-  document.body.appendChild(app.view);
-
-  const controller = new MapController(app);
-  controller.showWorldMap();
-
-  // Pour pouvoir utiliser generateWorldMap depuis la console navigateur
-  window.generateWorldMap = generateWorldMap;
-</script>
+<!-- Scripts -->
+<script src="./libs/pixi.min.js"></script>
+<script type="module" src="./pixi-bootstrap.js"></script>
 
 </body>
 </html>
