@@ -1,0 +1,17 @@
+{
+    "entities": [
+      { "type": "road", "x": 2, "y": 2 },
+      { "type": "road", "x": 2, "y": 3 },
+      { "type": "road", "x": 2, "y": 4 },
+      { "type": "road", "x": 3, "y": 2 },
+      { "type": "road", "x": 4, "y": 2 },
+  
+      { "type": "slot", "x": 1, "y": 1 },
+      { "type": "slot", "x": 3, "y": 3 },
+      { "type": "slot", "x": 0, "y": 4 },
+      { "type": "slot", "x": 4, "y": 4 },
+  
+      { "type": "building", "subtype": "mairie", "x": 1, "y": 4 },
+      { "type": "building", "subtype": "entrepot", "x": 4, "y": 1 }
+    ]
+  }

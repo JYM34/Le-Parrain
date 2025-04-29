@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Carte District</title>
+  <style>
+    body { margin: 0; overflow: hidden; background: #1e1e1e; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+<script type="module">
+import * as PIXI from 'https://unpkg.com/pixi.js@7.2.4/dist/pixi.mjs';
+import { MapController } from './map-controller.js';
+import { generateWorldMap } from './world-generator.js';
+
+const app = new PIXI.Application({ width: window.innerWidth, height: window.innerHeight, backgroundColor: 0x1e1e1e });
+document.body.appendChild(app.view);
+
+const controller = new MapController(app);
+controller.showWorldMap();
+
+// 👇 Expose dans la console pour test manuel
+window.generateWorldMap = generateWorldMap;
+
+</script>
+</body>
+</html>
