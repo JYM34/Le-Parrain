@@ -1,6 +1,4 @@
 // world-map.js
-import * as PIXI from 'https://unpkg.com/pixi.js@7.2.4/dist/pixi.mjs';
-
 const TILE_WIDTH = 256;
 const TILE_HEIGHT = 128;
 
