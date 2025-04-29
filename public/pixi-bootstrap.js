@@ -1,8 +1,7 @@
 import { HUD } from './hud.js';
 import { MapController } from './map-controller.js';
-import { generateWorldMap } from './world-generator.js';
+import { Player } from './player.js';
 
-// Init PIXI
 const app = new PIXI.Application({
   width: window.innerWidth,
   height: window.innerHeight,
@@ -10,32 +9,69 @@ const app = new PIXI.Application({
 });
 document.body.appendChild(app.view);
 
-// Init Map Controller
-const controller = new MapController(app);
-controller.showWorldMap();
-
-// Init HUD
+// Init HUD et MapController
 const hud = new HUD();
+const controller = new MapController(app);
 
-// Joueur de base
-const player = {
-  name: "Don Corleone",
-  money: 8000,
-  resources: 120,
-  reputation: 34
-};
+let player = null;
 
-// Afficher infos HUD
-hud.update(player);
+// Fonction d'initialisation principale
+async function initGame() {
+  try {
+    // 1. Vérifie si l'utilisateur est connecté
+    const sessionRes = await fetch('/api/me');
+    if (!sessionRes.ok) {
+      window.location.href = '/home.html';
+      return;
+    }
 
-// Logique de génération automatique
-setInterval(() => {
-  player.money += 100;          // gagner 100💰 toutes les 5s
-  player.resources += 5;        // gagner 5📦 toutes les 5s
-  player.reputation += 1;       // gagner 1🏆 toutes les 5s
+    const { user } = await sessionRes.json();
 
-  hud.update(player);
-  hud.notify('+100 💰 +5 📦 +1 🏆');
-}, 5000); // toutes les 5 secondes
+    // 2. Récupère les données complètes du joueur
+    const userRes = await fetch(`/api/user/${user.username}`);
+    if (!userRes.ok) {
+      console.error('❌ Utilisateur introuvable côté serveur');
+      return;
+    }
 
-window.generateWorldMap = generateWorldMap;
+    const userData = await userRes.json();
+    player = new Player(userData);
+
+    // 3. Met à jour l'interface
+    hud.update(player);
+    controller.showWorldMap();
+
+    // 4. Démarre la génération automatique
+    setInterval(() => {
+      player.gainCash(100);
+      player.resources += 5;
+      player.reputation += 1;
+
+      hud.update(player);
+      hud.notify('+100 💰 +5 📦 +1 🏆');
+    }, 5000);
+
+    // 5. Rendre accessibles globalement si besoin
+    window.controller = controller;
+    window.player = player;
+
+  } catch (err) {
+    console.error('❌ Impossible de charger les infos joueur :', err);
+    window.location.href = '/home.html';
+  }
+}
+
+initGame();
+
+// 🔌 Bouton de déconnexion
+const logoutBtn = document.getElementById('logout-btn');
+if (logoutBtn) {
+  logoutBtn.addEventListener('click', async () => {
+    const res = await fetch('/api/logout', { method: 'POST' });
+    if (res.ok) {
+      window.location.href = '/home.html';
+    } else {
+      alert('❌ Erreur lors de la déconnexion.');
+    }
+  });
+}

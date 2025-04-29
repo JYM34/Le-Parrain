@@ -12,7 +12,7 @@ export class HUD {
     }
   
     update(player) {
-      this.nameEl.textContent = player.name;
+      this.nameEl.innerHTML = `<span class="don-name">👑 Don ${player.username}</span>`;
       this.moneyEl.textContent = player.money;
       this.resourcesEl.textContent = player.resources;
       this.reputationEl.textContent = player.reputation;

@@ -1,0 +1,15 @@
+[
+  {
+    "username": "JYM",
+    "password": "test",
+    "ressources": {
+      "cash": 100,
+      "influence": 0,
+      "soldiers": 0
+    },
+    "slot": {
+      "x": 3,
+      "y": 31
+    }
+  }
+]
